@@ -1,0 +1,170 @@
+{
+  "_args": [
+    [
+      "@ionic/schematics-angular@^1.0.0",
+      "D:\\WORK\\schematics\\teste\\MyApp"
+    ]
+  ],
+  "_from": "@ionic/schematics-angular@>=1.0.0 <2.0.0",
+  "_id": "@ionic/schematics-angular@1.0.5",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/@ionic/schematics-angular",
+  "_nodeVersion": "10.8.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/schematics-angular_1.0.5_1534369898589_0.8487221530246518"
+  },
+  "_npmUser": {
+    "email": "hi@ionicframework.com",
+    "name": "ionicjs"
+  },
+  "_npmVersion": "6.2.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "@ionic/schematics-angular",
+    "raw": "@ionic/schematics-angular@^1.0.0",
+    "rawSpec": "^1.0.0",
+    "scope": "@ionic",
+    "spec": ">=1.0.0 <2.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@ionic/schematics-angular/-/schematics-angular-1.0.5.tgz",
+  "_shasum": "e8512b05ef6f790e7e22af2f51471f91bc84031f",
+  "_shrinkwrap": null,
+  "_spec": "@ionic/schematics-angular@^1.0.0",
+  "_where": "D:\\WORK\\schematics\\teste\\MyApp",
+  "author": {
+    "email": "hi@ionic.io",
+    "name": "Ionic Team",
+    "url": "https://ionicframework.com"
+  },
+  "dependencies": {
+    "@schematics/angular": "~0.7.2",
+    "lodash": "^4.17.5",
+    "tslib": "^1.9.0",
+    "typescript": ">=2.6.2 <2.10"
+  },
+  "description": "Schematics specific to Ionic for Angular",
+  "devDependencies": {
+    "@angular-devkit/core": "~0.7.2",
+    "@angular-devkit/schematics": "~0.7.2",
+    "@types/lodash": "^4.14.104",
+    "@types/node": "^6.0.101",
+    "jest": "^23.0.1",
+    "jest-cli": "^23.0.1",
+    "lint-staged": "^7.2.0",
+    "rimraf": "^2.6.2",
+    "source-map": "^0.7.0",
+    "ts-jest": "^23.0.0",
+    "tslint": "^5.9.1"
+  },
+  "directories": {},
+  "dist": {
+    "fileCount": 14,
+    "integrity": "sha512-Ob4QpegZRVZgKzXdnvyEavPkUr4JBAlpP7SifFtpHytUs52rtwYRAeM66ADfjxKH8zg8ff17EtqQrQ8Lf88YJQ==",
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbdKBqCRA9TVsSAnZWagAAbOoP/R8W62P2QZ+dt1hTCY2h\nNCTCnYAM/KOLREpBaTf0Zi8DcDrm+E82jx4r+DCjDw4uObl30qNpJSczTy3x\nbyksX6QSMJXt82rODCUsyfuuaPBko5683Mc7yJTGC90uMxgffQv3K/UK9nJ5\nW/kF3WCIBK76zsInYd0ZzoO8tg5yy/X6cK/+6dhmEdwbobLTDmQbeCAcBM2H\nr//GkoRHQhLWLoxsKeBM2UCZ+UDRsR6k1qr07YiCdxUafw0twUfjRQeVHrXT\nbw90ZoBSbtFT61Nl4iiCMlMG33zO31kWcGIfupRkUjMLspafhRBqqLg40Rx2\nkYWCp8h4I56ZQpalaafe2Py21F6o72GP0TYLYY323nvxWjQpIeGz8pSxS8st\nJleYIJIAS2aIkEq47jqqX8Gu6Gh+NJCwsYVgmVAK9d6TkT0AeHi4F8nmSg1C\ndbyR6EtsorkXsJtUNMVTzbvODv01TaS+eEfuEyAepjD9seiNKQmbUAj0B5gl\nkJwjfo4L06KBecOno2A2QTflxfOFGfovQDJbmlWmywDluip4BmLXX3sCnXd0\nlJ0XFGUWxUGR/9VL6iWkTAPy5A+xNMvh2phZ310WZUH0jUK8SfgmV4MCSssW\nwpP7Hao6Ot3nLXtZDRkErAXq16ZGAeXg76GXnk6f4LawHzhzzEeLcfI1T0Ze\nqVSu\r\n=b89+\r\n-----END PGP SIGNATURE-----\r\n",
+    "shasum": "e8512b05ef6f790e7e22af2f51471f91bc84031f",
+    "tarball": "https://registry.npmjs.org/@ionic/schematics-angular/-/schematics-angular-1.0.5.tgz",
+    "unpackedSize": 22131
+  },
+  "homepage": "https://ionicframework.com/",
+  "keywords": [
+    "blueprints",
+    "code generation",
+    "schematics",
+    "ionic",
+    "ionic framework",
+    "ionicframework"
+  ],
+  "lint-staged": {
+    "ignore": [
+      "**/__tests__/*.{ts,tsx}"
+    ],
+    "linters": {
+      "*.{ts,tsx}": "npm run lint"
+    }
+  },
+  "maintainers": [
+    {
+      "email": "hi+adam@ionicframework.com",
+      "name": "adamdbradley"
+    },
+    {
+      "email": "brandy@ionic.io",
+      "name": "brandyscarney"
+    },
+    {
+      "email": "cam@camwiegert.com",
+      "name": "camwiegert"
+    },
+    {
+      "email": "max@drifty.com",
+      "name": "drifty"
+    },
+    {
+      "email": "dwieeb@gmail.com",
+      "name": "dwieeb"
+    },
+    {
+      "email": "rudy@ionic.io",
+      "name": "fuiste"
+    },
+    {
+      "email": "giovanni@ionic.io",
+      "name": "giodimiliaionic"
+    },
+    {
+      "email": "hi@ionicframework.com",
+      "name": "ionicjs"
+    },
+    {
+      "email": "jthoms1@gmail.com",
+      "name": "jthoms1"
+    },
+    {
+      "email": "lars@ionic.io",
+      "name": "larsmikkelsen"
+    },
+    {
+      "email": "manu.mtza@gmail.com",
+      "name": "manucorporat"
+    },
+    {
+      "email": "max@ionic.io",
+      "name": "maxlynch"
+    },
+    {
+      "email": "mikehartington@gmail.com",
+      "name": "mhartington"
+    },
+    {
+      "email": "nick@ionic.io",
+      "name": "nhyatt"
+    },
+    {
+      "email": "perry@ionic.io",
+      "name": "perrygovier"
+    }
+  ],
+  "name": "@ionic/schematics-angular",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "@angular-devkit/core": "~0.7.2",
+    "@angular-devkit/schematics": "~0.7.2"
+  },
+  "readme": "ERROR: No README data found!",
+  "schematics": "./collection.json",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf '*/index.{js,d.ts}'",
+    "lint": "tslint --config tslint.js --project tsconfig.json",
+    "precommit": "lint-staged",
+    "prepublishOnly": "npm run build",
+    "watch": "tsc -w"
+  },
+  "version": "1.0.5"
+}
