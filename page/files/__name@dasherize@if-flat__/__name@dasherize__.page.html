@@ -4,27 +4,47 @@
       <ion-menu-button></ion-menu-button>
       <ion-back-button [text]="''"></ion-back-button>
     </ion-buttons>
-    <ion-title><%= name %></ion-title>
-    <ion-buttons slot="end">
-      <ion-button *ngIf="<%= camelize(name) %>.id" ion-button (click)="delete(<%= camelize(name) %>.id)">
-        <ion-icon name="trash"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>
+      <%= name %>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
 
-  <form #<%= camelize(name) %>Form="ngForm" (ngSubmit)="save(<%= camelize(name) %>)">
-    <ion-item>
-      <ion-label>Name:</ion-label>
-      <ion-input type="text" required [(ngModel)]="<%= camelize(name) %>.name" name="<%= camelize(name) %>Name" placeholder="<%= camelize(name) %>"></ion-input>
-    </ion-item>
+  <div *ngIf="<%= camelize(name) %>Array;let <%= camelize(name) %>Items">
+    <div *ngIf="<%= camelize(name) %>Items.length > 0;else no<%= camelize(name) %>">
+      <ion-grid>
+        <ion-row wrap>
+          <ion-col *ngFor="let <%= camelize(name) %> of (<%= camelize(name) %>Array); let i = index;">
+              <ion-card style="min-width: 200px;" color="secondary">
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button type="submit" [disabled]="<%= camelize(name) %>Form.invalid" color="primary">
-        <ion-icon name="save"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </form>
+
+                <ion-card-header>{{<%= camelize(name) %>.name}}</ion-card-header>
+
+                <ion-card-content>
+                  <!-- Put anothers components of model properties here -->
+                </ion-card-content>
+
+
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <ng-template #no<%= camelize(name) %>>
+    <ion-card>
+      <ion-card-title>
+        No <%= camelize(name) %> found!
+      </ion-card-title>
+    </ion-card>
+  </ng-template>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-button [routerLink]="['create']">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </ion-fab>
 
 </ion-content>

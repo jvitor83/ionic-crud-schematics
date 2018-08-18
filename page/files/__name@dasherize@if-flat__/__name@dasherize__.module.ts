@@ -6,11 +6,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { <%= classify(name) %>Page } from './<%= dasherize(name) %>.page';
+import { <%= classify(name) %>ChangePage } from './<%= dasherize(name) %>.change-page';
 
 const routes: Routes = [
   {
     path: '',
     component: <%= classify(name) %>Page
+  },
+  {
+    path: 'create',
+    component: <%= classify(name) %>ChangePage
+  },
+  {
+    path: ':<%= camelize(name) %>Id/edit',
+    component: <%= classify(name) %>ChangePage
   }
 ];
 
@@ -21,6 +30,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [<%= classify(name) %>Page]
+  declarations: [<%= classify(name) %>Page, <%= classify(name) %>ChangePage]
 })
 export class <%= classify(name) %>PageModule {}
