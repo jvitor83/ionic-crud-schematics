@@ -13,11 +13,7 @@ import { <%= classify(name) %>Service } from './<%= camelize(name) %>.service';
 })
 export class <%= classify(name) %>ChangePage implements OnInit, OnDestroy {
 
-  <%= camelize(name) %>: <%= classify(name) %> = {
-    id: null,
-    // Put default values here
-    name: ''
-  };
+  <%= camelize(name) %>: <%= classify(name) %> = <any>{ };
 
   // All subscription must be unsubscribed at ngOnDestroy
   paramMapSubscription: Subscription;

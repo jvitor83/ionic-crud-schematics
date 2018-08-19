@@ -14,14 +14,15 @@
   <div *ngIf="<%= camelize(name) %>Array;let <%= camelize(name) %>Items">
     <div *ngIf="<%= camelize(name) %>Items.length > 0;else no<%= camelize(name) %>">
       <ion-grid>
-        <ion-row wrap>
+        <ion-row wrap align-items-center>
           <ion-col *ngFor="let <%= camelize(name) %> of (<%= camelize(name) %>Array); let i = index;">
-              <ion-card style="min-width: 200px;" color="secondary">
+              <ion-card tappable routerLink="{{<%= camelize(name) %>.id}}" style="min-width: 200px;">
 
 
-                <ion-card-header>{{<%= camelize(name) %>.name}}</ion-card-header>
+                <ion-card-header color="secondary">{{<%= camelize(name) %>.name}}</ion-card-header>
 
                 <ion-card-content>
+                  <p>{{ <%= camelize(name) %>.description }}</p>
                   <!-- Put anothers components of model properties here -->
                 </ion-card-content>
 
@@ -42,7 +43,7 @@
 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-button [routerLink]="['create']">
+    <ion-button routerLink="create">
       <ion-icon name="add"></ion-icon>
     </ion-button>
   </ion-fab>

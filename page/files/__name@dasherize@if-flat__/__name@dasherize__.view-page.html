@@ -1,0 +1,36 @@
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+        <ion-back-button [text]="''"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ <%= camelize(name).name %> }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button routerLink="edit">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content padding>
+
+    <ion-grid>
+        <ion-row wrap align-items-center>
+          <ion-col>
+
+            <ion-item>
+              <ion-label slot="start">Description:</ion-label>
+              <p>{{ <%= camelize(name) %>.description }}</p>
+            </ion-item>
+
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+
+      <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button routerLink="" type="submit" color="primary">
+          <ion-icon name=""></ion-icon>
+        </ion-button>
+      </ion-fab> -->
+
+  </ion-content>

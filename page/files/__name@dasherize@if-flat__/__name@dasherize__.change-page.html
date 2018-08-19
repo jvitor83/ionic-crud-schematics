@@ -15,9 +15,14 @@
 <ion-content padding>
 
   <form #<%= camelize(name) %>Form="ngForm" (ngSubmit)="save(<%= camelize(name) %>)">
+
     <ion-item>
       <ion-label>Name:</ion-label>
-      <ion-input type="text" required [(ngModel)]="<%= camelize(name) %>.name" name="<%= camelize(name) %>Name" placeholder="<%= camelize(name) %>"></ion-input>
+      <ion-input type="text" required [(ngModel)]="<%= camelize(name) %>.name" name="<%= camelize(name) %>Name" [autofocus]="true" [autocapitalize]="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Description:</ion-label>
+      <ion-textarea type="text" required [(ngModel)]="<%= camelize(name) %>.description" name="<%= camelize(name) %>Description" ><ion-textarea>
     </ion-item>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
