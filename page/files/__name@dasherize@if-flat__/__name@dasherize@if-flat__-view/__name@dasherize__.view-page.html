@@ -4,7 +4,7 @@
         <ion-menu-button></ion-menu-button>
         <ion-back-button [text]="''"></ion-back-button>
       </ion-buttons>
-      <ion-title>{{ <%= camelize(name).name %> }}</ion-title>
+      <ion-title>{{ <%= camelize(name) %>.name }}</ion-title>
       <ion-buttons slot="end">
         <ion-button routerLink="edit">
           <ion-icon name="create"></ion-icon>

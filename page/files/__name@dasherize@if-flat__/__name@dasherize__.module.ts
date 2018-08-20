@@ -6,8 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { <%= classify(name) %>Page } from './<%= dasherize(name) %>.page';
-import { <%= classify(name) %>ChangePage } from './<%= dasherize(name) %>.change-page';
-import { <%= classify(name) %>ViewPage } from './<%= dasherize(name) %>.view-page';
+import { <%= classify(name) %>ChangePage } from './<%= dasherize(name) %>-change/<%= dasherize(name) %>.change-page';
+import { <%= classify(name) %>ViewPage } from './<%= dasherize(name) %>-view/<%= dasherize(name) %>.view-page';
 
 const routes: Routes = [
   {
