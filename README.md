@@ -1,4 +1,16 @@
-# Schematics - ionic/angular
+# Schematics - jvitor83/ionic-crud-schematics
 
-This package contains the schematics which are used to generate Angular
-components using `ionic generate` in ionic/angular v4+.
+## Install:
+```
+npm install --save-dev jvitor83/ionic-crud-schematics
+```
+
+## Configure:
+```
+ng config cli.defaultCollection @jvitor83/ionic-crud-schematics
+```
+
+## Generate:
+```
+ng g page entity
+```
