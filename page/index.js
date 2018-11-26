@@ -8,7 +8,8 @@ const change_1 = require("@schematics/angular/utility/change");
 const config_1 = require("@schematics/angular/utility/config");
 const find_module_1 = require("@schematics/angular/utility/find-module");
 const parse_name_1 = require("@schematics/angular/utility/parse-name");
-const validation_1 = require("@schematics/angular/utility/validation");
+const rxjs_1 = require("rxjs");
+const node_fetch_1 = require("node-fetch");
 function findRoutingModuleFromOptions(host, options) {
     if (options.hasOwnProperty('skipImport') && options.skipImport) {
         return undefined;
@@ -107,18 +108,51 @@ function addRouteToRoutesArray(source, ngModulePath, routePath, routeLoadChildre
     }
     return [];
 }
-function buildSelector(options, projectPrefix) {
-    let selector = core_1.strings.dasherize(options.name);
-    if (options.prefix) {
-        selector = `${options.prefix}-${selector}`;
-    }
-    else if (options.prefix === undefined && projectPrefix) {
-        selector = `${projectPrefix}-${selector}`;
-    }
-    return selector;
+// function buildSelector(options: PageOptions, projectPrefix: string) {
+//   let selector = strings.dasherize(options.name);
+//   if (options.prefix) {
+//     selector = `${options.prefix}-${selector}`;
+//   } else if (options.prefix === undefined && projectPrefix) {
+//     selector = `${projectPrefix}-${selector}`;
+//   }
+//   return selector;
+// }
+function buildProperties(options, templateOptions) {
+    return (host) => {
+        return new rxjs_1.Observable((observer) => {
+            node_fetch_1.default(options.url)
+                .then(res => res.json())
+                .then(data => {
+                console.log(JSON.stringify(data));
+                let value = data;
+                if (Array.isArray(data) && data.length > 0) {
+                    value = data[0];
+                }
+                const finalObj = {};
+                Object.keys(value).forEach(key => {
+                    finalObj[key] = typeof value[key];
+                    if (finalObj[key] !== 'string' && finalObj[key] !== 'boolean' && finalObj[key] !== 'number') {
+                        finalObj[key] = 'string';
+                    }
+                });
+                options.obj = JSON.stringify(finalObj);
+                options.parameters = Object.keys(value);
+                templateOptions.parameters = Object.keys(value);
+                console.log('options.parameters');
+                console.log(options.parameters);
+                observer.next(host);
+                observer.complete();
+            })
+                .catch(function (err) {
+                console.error(`JSON parse error ${err}`);
+                observer.error(err);
+            });
+        });
+    };
 }
 function default_1(options) {
     return (host, context) => {
+        console.log(context);
         const workspace = config_1.getWorkspace(host);
         if (!options.project) {
             options.project = Object.keys(workspace.projects)[0];
@@ -128,23 +162,19 @@ function default_1(options) {
             options.path = `/${project.root}/src/app`;
         }
         options.module = findRoutingModuleFromOptions(host, options);
-        const parsedPath = parse_name_1.parseName(options.path, options.name);
-        options.name = parsedPath.name;
-        options.path = parsedPath.path;
-        options.selector = options.selector ? options.selector : buildSelector(options, project.prefix);
-        validation_1.validateName(options.name);
-        validation_1.validateHtmlSelector(options.selector);
-        const templateSource = schematics_1.apply(schematics_1.url('./files'), [
-            options.spec ? schematics_1.noop() : schematics_1.filter(p => !p.endsWith('.spec.ts')),
-            schematics_1.template(Object.assign({}, core_1.strings, { 'if-flat': (s) => options.flat ? '' : s }, options)),
-            schematics_1.move(parsedPath.path),
-        ]);
-        return schematics_1.chain([
-            schematics_1.branchAndMerge(schematics_1.chain([
-                addRouteToNgModule(options),
-                schematics_1.mergeWith(templateSource),
+        const parsedPathRead = parse_name_1.parseName(options.path, options.name);
+        const templateOptions = Object.assign({}, core_1.strings, { 'if-flat': (s) => options.flat ? '' : s }, options);
+        const rule = schematics_1.chain([
+            options.url ? buildProperties(options, templateOptions) : schematics_1.noop(),
+            addRouteToNgModule(options),
+            schematics_1.mergeWith(schematics_1.apply(schematics_1.url('./files'), [
+                options.spec ? schematics_1.noop() : schematics_1.filter(path => !path.endsWith('.spec.ts')),
+                schematics_1.template(templateOptions),
+                schematics_1.move(parsedPathRead.path),
             ])),
-        ])(host, context);
+        ]);
+        return rule(host, context);
     };
 }
 exports.default = default_1;
+//# sourceMappingURL=index.js.map

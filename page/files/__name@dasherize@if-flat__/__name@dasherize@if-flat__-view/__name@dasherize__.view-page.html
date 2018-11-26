@@ -2,9 +2,13 @@
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
-        <ion-back-button [text]="''"></ion-back-button>
+        <ion-back-button></ion-back-button>
       </ion-buttons>
+      <% if (parameters.filter(p => p.toLowerCase() == 'name')[0]) { %>
       <ion-title>{{ <%= camelize(name) %>.name }}</ion-title>
+      <% } else { %>
+      <ion-title><%= classify(name) %></ion-title>
+      <% } %>
       <ion-buttons slot="end">
         <ion-button routerLink="edit">
           <ion-icon name="create"></ion-icon>
@@ -14,18 +18,16 @@
   </ion-header>
   <ion-content padding>
 
-    <ion-grid>
-        <ion-row wrap align-items-center>
-          <ion-col>
 
-            <ion-item>
-              <ion-label slot="start">Description:</ion-label>
-              <p>{{ <%= camelize(name) %>.description }}</p>
-            </ion-item>
 
-          </ion-col>
-        </ion-row>
-    </ion-grid>
+    <ion-list>
+      <% parameters.filter(p => p.toLowerCase() != 'name').forEach(function(parameter){ %>
+      <ion-item>
+        <ion-label slot="start"><%= classify(parameter) %>:</ion-label>
+        <p>{{ <%= camelize(name) %>.<%= camelize(parameter) %> }}</p>
+      </ion-item>
+      <% }); %>
+    </ion-list>
 
       <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-button routerLink="" type="submit" color="primary">

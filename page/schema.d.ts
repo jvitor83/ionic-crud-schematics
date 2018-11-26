@@ -9,4 +9,7 @@ export interface Schema {
   selector?: string;
   module?: string;
   routePath?: string;
+  url?: string;
+  obj?: string;
+  parameters?: Array<string>;
 }

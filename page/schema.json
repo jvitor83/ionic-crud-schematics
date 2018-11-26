@@ -25,6 +25,20 @@
         "index": 0
       }
     },
+    "parameters": {
+      "type": "array",
+      "description": "value object parameters.",
+      "visible": false
+    },
+    "url": {
+      "description": "Url to get object parameters.",
+      "type": "string"
+    },
+    "obj": {
+      "description": "Object string for the value object.",
+      "type": "string",
+      "default": "{\"id\":\"number\", \"name\":\"string\", \"description\":\"string\"}"
+    },
     "prefix": {
       "type": "string",
       "description": "The prefix to apply to generated selectors",

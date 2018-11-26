@@ -12,5 +12,5 @@ ng config cli.defaultCollection @jvitor83/ionic-crud-schematics
 
 ## Generate:
 ```
-ng g page entity
+ng g page --name=breweries --url=https://api.openbrewerydb.org/breweries --force
 ```

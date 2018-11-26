@@ -32,6 +32,7 @@
   "dependencies": {
     "@schematics/angular": "~0.7.2",
     "lodash": "^4.17.5",
+    "node-fetch": "^2.3.0",
     "tslib": "^1.9.0",
     "typescript": ">=2.6.2 <2.10"
   },
@@ -39,7 +40,8 @@
     "@angular-devkit/core": "~0.7.2",
     "@angular-devkit/schematics": "~0.7.2",
     "@types/lodash": "^4.14.104",
-    "@types/node": "^6.0.101",
+    "@types/node": "^8.10.20",
+    "@types/node-fetch": "^2.1.4",
     "jest": "^23.0.1",
     "jest-cli": "^23.0.1",
     "lint-staged": "^7.2.0",

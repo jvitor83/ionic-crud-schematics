@@ -9,10 +9,12 @@ import { <%= classify(name) %> } from '../<%= classify(name) %>.model';
 })
 export class <%= classify(name) %>Service {
 
+    protected url: string = '<%= url %>';
+
     constructor(private http: HttpClient) { }
 
     public getAll(): Observable<<%= classify(name) %>[]> {
-        const getObservable = this.http.get<any>(`api/<%= camelize(name) %>`);
+        const getObservable = this.http.get<any>(`${this.url}`);
         const getObservableMap = getObservable.pipe(map(objectResponse => {
             // TODO: if needed make the mapping between response and the model to return
             return objectResponse;
@@ -21,7 +23,7 @@ export class <%= classify(name) %>Service {
     }
 
     public get(<%= camelize(name) %>Id: <%= classify(name) %>): Observable<<%= classify(name) %>> {
-        const getObservable = this.http.get<any>(`api/<%= camelize(name) %>${<%= camelize(name) %>Id}`);
+        const getObservable = this.http.get<any>(`${this.url}/${<%= camelize(name) %>Id}`);
         const getObservableMap = getObservable.pipe(map(objectResponse => {
             // TODO: if needed make the mapping between response and the model to return
             return objectResponse;
@@ -30,7 +32,7 @@ export class <%= classify(name) %>Service {
     }
 
     public create(<%= camelize(name) %>: <%= classify(name) %>): Observable<<%= classify(name) %>> {
-        const createObservable = this.http.post<any>(`api/<%= camelize(name) %>`, <%= camelize(name) %>);
+        const createObservable = this.http.post<any>(`${this.url}`, <%= camelize(name) %>);
         const createObservableMap = createObservable.pipe(map(objectResponse => {
             // TODO: if needed make the mapping between response and the model to return
             return objectResponse;
@@ -39,7 +41,7 @@ export class <%= classify(name) %>Service {
     }
 
     public update(<%= camelize(name) %>: <%= classify(name) %>): Observable<<%= classify(name) %>> {
-        const updateObservable = this.http.put<any>(`api/<%= camelize(name) %>`, <%= camelize(name) %>);
+        const updateObservable = this.http.put<any>(`${this.url}`, <%= camelize(name) %>);
         const updateObservableMap = updateObservable.pipe(map(objectResponse => {
             // TODO: if needed make the mapping between response and the model to return
             return objectResponse;
@@ -48,7 +50,7 @@ export class <%= classify(name) %>Service {
     }
 
     public delete(<%= camelize(name) %>: <%= classify(name) %>): Observable<<%= classify(name) %>> {
-        const deleteObservable = this.http.delete<any>(`api/<%= camelize(name) %>/${<%= camelize(name) %>.id}`);
+        const deleteObservable = this.http.delete<any>(`${this.url}/${<%= camelize(name) %>.id}`);
         const deleteObservableMap = deleteObservable.pipe(map(objectResponse => {
             // TODO: if needed make the mapping between response and the model to return
             return objectResponse;

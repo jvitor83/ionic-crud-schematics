@@ -8,7 +8,7 @@ import {
   SchematicsException,
   Tree,
   apply,
-  branchAndMerge,
+  //branchAndMerge,
   chain,
   filter,
   mergeWith,
@@ -23,9 +23,12 @@ import { Change, InsertChange } from '@schematics/angular/utility/change';
 import { getWorkspace } from '@schematics/angular/utility/config';
 import { ModuleOptions, buildRelativePath } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
-import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
+// import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
 
 import { Schema as PageOptions } from './schema';
+import { Observable } from 'rxjs';
+import { default as fetch } from 'node-fetch';
+
 
 function findRoutingModuleFromOptions(host: Tree, options: ModuleOptions): Path | undefined {
   if (options.hasOwnProperty('skipImport') && options.skipImport) {
@@ -34,7 +37,7 @@ function findRoutingModuleFromOptions(host: Tree, options: ModuleOptions): Path 
 
   if (!options.module) {
     const pathToCheck = (options.path || '')
-                      + (options.flat ? '' : '/' + strings.dasherize(options.name));
+      + (options.flat ? '' : '/' + strings.dasherize(options.name));
 
     return normalize(findRoutingModule(host, pathToCheck));
   } else {
@@ -125,7 +128,7 @@ function addRouteToRoutesArray(source: ts.SourceFile, ngModulePath: string, rout
 
   for (const keyword of keywords) {
     if (ts.isVariableStatement(keyword)) {
-      const [ declaration ] = keyword.declarationList.declarations;
+      const [declaration] = keyword.declarationList.declarations;
 
       if (ts.isVariableDeclaration(declaration) && declaration.initializer && declaration.name.getText() === 'routes') {
         const node = declaration.initializer.getChildAt(1);
@@ -150,20 +153,62 @@ function addRouteToRoutesArray(source: ts.SourceFile, ngModulePath: string, rout
   return [];
 }
 
-function buildSelector(options: PageOptions, projectPrefix: string) {
-  let selector = strings.dasherize(options.name);
+// function buildSelector(options: PageOptions, projectPrefix: string) {
+//   let selector = strings.dasherize(options.name);
 
-  if (options.prefix) {
-    selector = `${options.prefix}-${selector}`;
-  } else if (options.prefix === undefined && projectPrefix) {
-    selector = `${projectPrefix}-${selector}`;
-  }
+//   if (options.prefix) {
+//     selector = `${options.prefix}-${selector}`;
+//   } else if (options.prefix === undefined && projectPrefix) {
+//     selector = `${projectPrefix}-${selector}`;
+//   }
 
-  return selector;
+//   return selector;
+// }
+
+function buildProperties(options: PageOptions, templateOptions: any): Rule {
+  return (host: Tree) => {
+    return new Observable<Tree>((observer) => {
+      
+      fetch(<string>options.url)
+        .then(res => res.json())
+        .then(data => {
+          console.log(JSON.stringify(data));
+          let value = data;
+          if (Array.isArray(data) && data.length > 0) {
+            value = data[0];
+          }
+          const finalObj = <any>{};
+          Object.keys(value).forEach(key => {
+            finalObj[key] = typeof value[key];
+            if (finalObj[key] !== 'string' && finalObj[key] !== 'boolean' && finalObj[key] !== 'number') {
+              finalObj[key] = 'string';
+            }
+          });
+          options.obj = JSON.stringify(finalObj);
+          options.parameters = Object.keys(value);
+          templateOptions.parameters = Object.keys(value);
+
+          console.log('options.parameters');
+          console.log(options.parameters);
+
+          observer.next(host);
+          observer.complete();
+        })
+        .catch(function (err: any) {
+          console.error(`JSON parse error ${err}`);
+          observer.error(err);
+        });
+    });
+  };
 }
 
-export default function(options: PageOptions): Rule {
+
+
+export default function (options: PageOptions): Rule {
   return (host, context) => {
+
+    console.log(context);
+
     const workspace = getWorkspace(host);
 
     if (!options.project) {
@@ -179,62 +224,41 @@ export default function(options: PageOptions): Rule {
     options.module = findRoutingModuleFromOptions(host, options);
 
 
-    //read
-    const optionsRead = Object.assign({}, options);
-    const parsedPathRead = parseName(options.path, options.name + '-read');
-    optionsRead.name = parsedPathRead.name;
-    optionsRead.path = parsedPathRead.path;
-    optionsRead.selector = options.selector || buildSelector(options, project.prefix);
+    const parsedPathRead = parseName(options.path, options.name);
 
-    validateName(optionsRead.name);
-    validateHtmlSelector(optionsRead.selector);
+    const templateOptions = {
+      ...strings,
+      'if-flat': (s: string) => options.flat ? '' : s,
+      ...options,
+    };
 
-    const templateSourceRead = apply(url('./files'), [
-      optionsRead.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
-      template({
-        ...strings,
-        'if-flat': (s: string) => optionsRead.flat ? '' : s,
-        ...optionsRead,
-      }),
-      move(parsedPathRead.path),
-    ]);
-
-    //write
-    const optionsWrite = Object.assign({}, options);
-    const parsedPathWrite = parseName(options.path, options.name + '-write');
-    optionsWrite.name = parsedPathWrite.name;
-    optionsWrite.path = parsedPathWrite.path;
-    optionsWrite.selector = options.selector || buildSelector(options, project.prefix);
-
-    validateName(optionsWrite.name);
-    validateHtmlSelector(optionsWrite.selector);
-
-    const templateSourceWrite = apply(url('./files'), [
-      optionsWrite.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
-      template({
-        ...strings,
-        'if-flat': (s: string) => optionsWrite.flat ? '' : s,
-        ...optionsWrite,
-      }),
-      move(parsedPathWrite.path),
-    ]);
-
-
-    return chain([
-      branchAndMerge(
-        chain([
-          addRouteToNgModule(optionsRead),
-          mergeWith(templateSourceRead),
-        ]),
+    const rule = chain([
+      options.url ? buildProperties(options, templateOptions) : noop(),
+      addRouteToNgModule(options),
+      mergeWith(
+        apply(url('./files'), [
+          options.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
+          template(<any>templateOptions),
+          move(parsedPathRead.path),
+        ])
       ),
-      branchAndMerge(
-        chain([
-          addRouteToNgModule(optionsWrite),
-          mergeWith(templateSourceWrite),
-        ]),
-      ),
+      // branchAndMerge(
+      //   chain([
+      //     urlRule,
+      //     addRouteToNgModule(optionsRead),
+      //     mergeWith(templateSourceRead),
+      //   ]),
+      // ),
+      // branchAndMerge(
+      //   chain([
+      //     urlRule,
+      //     addRouteToNgModule(optionsWrite),
+      //     mergeWith(templateSourceWrite),
+      //   ]),
+      // ),
       //options.lintFix ? applyLintFix(options.path) : noop(),
     ]);
+    return rule(host, context);
 
 
   };
