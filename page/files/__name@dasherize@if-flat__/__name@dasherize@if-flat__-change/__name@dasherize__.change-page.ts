@@ -120,26 +120,44 @@ export class <%= classify(name) %>ChangePage implements OnInit, OnDestroy {
   }
 
   protected delete(<%= camelize(name) %>Id: <%= classify(name) %>) {
-    const loadingPromise = this.loadingController.create();
-    loadingPromise.then(r => r.present());
 
-    const deleteObservable = this.<%= camelize(name) %>Service.delete(<%= camelize(name) %>Id);
+    this.alertController.create(<AlertOptions>{
+      message: 'Are you sure you want to delete?',
+      buttons: [
+        <AlertButton>{
+          role: 'Yes', text: 'Yes',
+          handler: () => {
 
-    this.deleteSubscription = deleteObservable.subscribe((value) => {
-      this.alertController.create(<AlertOptions>{
-        header: 'Success',
-        message: 'Deleted successfully!',
-        buttons: [<AlertButton>{ text: 'OK' }]
-      }).then(r => r.present());
-    }, (error) => {
-      this.alertController.create(<AlertOptions>{
-        header: 'Error',
-        message: 'There was an error deleting data! Please try again later.',
-        buttons: [<AlertButton>{ text: 'OK' }]
-      }).then(r => r.present());
-    });
 
-    this.deleteSubscription.add(() => loadingPromise.then(loading => loading.dismiss()));
+            const loadingPromise = this.loadingController.create();
+            loadingPromise.then(r => r.present());
+
+            const deleteObservable = this.<%= camelize(name) %>Service.delete(<%= camelize(name) %>Id);
+
+            this.deleteSubscription = deleteObservable.subscribe((value) => {
+              this.alertController.create(<AlertOptions>{
+                header: 'Success',
+                message: 'Deleted successfully!',
+                buttons: [<AlertButton>{ text: 'OK' }]
+              }).then(r => r.present());
+            }, (error) => {
+              this.alertController.create(<AlertOptions>{
+                header: 'Error',
+                message: 'There was an error deleting data! Please try again later.',
+                buttons: [<AlertButton>{ text: 'OK' }]
+              }).then(r => r.present());
+            });
+
+            this.deleteSubscription.add(() => loadingPromise.then(loading => loading.dismiss()));
+
+
+        
+          }
+        },
+        <AlertButton>{ role: 'cancel', text: 'No', cssClass: 'secondary' }
+      ]
+    }).then(r => r.present());
+
   }
 
   ngOnDestroy() {
