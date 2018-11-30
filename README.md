@@ -1,16 +1,43 @@
 # Schematics - jvitor83/ionic-crud-schematics
 
-## Install:
+
+### Install the tools
+- Install [Node.js](https://nodejs.org/en/download/)
+```bash
+npm i -g @angular/cli ionic
 ```
+
+### Create your project
+```bash
+ionic start --type=angular MyProject
+cd MyProject
+```
+
+
+## Install:
+```bash
 npm install --save-dev jvitor83/ionic-crud-schematics
 ```
 
 ## Configure:
-```
+```bash
 ng config cli.defaultCollection @jvitor83/ionic-crud-schematics
 ```
 
-## Generate:
+## Import module `HttpClientModule` at `app.module.ts`
+```typescript
+...
+import { HttpClientModule } from '@angular/common/http';
+...
+@NgModule({
+    imports: [ 
+        HttpClientModule
+        ...
+    ]
+...
 ```
-ng g page --name=breweries --url=https://api.openbrewerydb.org/breweries --force
+
+## Generate:
+```bash
+ng g crud --name=breweries --url=https://api.openbrewerydb.org/breweries --force
 ```

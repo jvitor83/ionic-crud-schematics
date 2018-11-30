@@ -1,10 +1,13 @@
 {
   "schematics": {
-    "page": {
-      "aliases": ["pg"],
+    "crud": {
       "factory": "./page",
       "description": "Create an Ionic page.",
       "schema": "./page/schema.json"
+    },
+    "page": {
+      "aliases": ["pg"],
+      "extends": "@schematics/ionic:page"
     },
     "class": {
       "aliases": ["cl"],
